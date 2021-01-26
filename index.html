@@ -5,26 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>欢迎来到我的网站</title>
     <style>
-        div
-{
+#w1
+	{
 	width:100px;
 	height:100px;
 	position:relative;
-	animation:myfirst 5s;
+	animation:move1 5s;
     animation-iteration-count:infinite;
-}
-@keyframes myfirst
-{
+	}
+#w2
+	{
+	width:100px;
+	height:100px;
+	position:relative;
+	animation:move2 5s;
+    animation-iteration-count:infinite;
+	}
+#w3
+	{
+	width:100px;
+	height:100px;
+	position:relative;
+	animation:move3 5s;
+    animation-iteration-count:infinite;
+	}
+#w4
+	{
+	width:100px;
+	height:100px;
+	position:relative;
+	animation:move4 5s;
+    animation-iteration-count:infinite;
+	}
+#w5
+	{
+	width:100px;
+	height:100px;
+	position:relative;
+	animation:move5 5s;
+    animation-iteration-count:infinite;
+	}
+@keyframes move1
+	{
 	0%   { left:0px; top:0px;}
 	25%  { left:200px; top:0px;}
 	50%  { left:200px; top:200px;}
 	75%  { left:0px; top:200px;}
 	100% { left:0px; top:0px;}
-}
+	}
 
+	@keyframes move2
+	{
+	0%   { left:200px; top:200px;}
+	25%  { left:200px; top:0px;}
+	50%  { left:200px; top:200px;}
+	75%  { left:0px; top:200px;}
+	100% { left:0px; top:0px;}
+	}
+	@keyframes move3
+	{
+	0%   { left:0px; top:0px;}
+	25%  { left:200px; top:0px;}
+	50%  { left:200px; top:200px;}
+	75%  { left:0px; top:200px;}
+	100% { left:0px; top:0px;}
+	}
+	@keyframes move4
+	{
+	0%   { left:0px; top:0px;}
+	25%  { left:200px; top:0px;}
+	50%  { left:200px; top:200px;}
+	75%  { left:0px; top:200px;}
+	100% { left:0px; top:0px;}
+	}
+	@keyframes move5
+	{
+	0%   { left:0px; top:0px;}
+	25%  { left:200px; top:0px;}
+	50%  { left:200px; top:200px;}
+	75%  { left:0px; top:200px;}
+	100% { left:0px; top:0px;}
+	}
     </style>
 </head>
 <body>
-   <div><img src="pic/还挺牛.png"></div> 
+   <div id="w1"><img src="pic/还挺牛.png"></div> 
+   <div id="w2"><img src="pic/还挺牛.png"></div> 
+   <div id="w3"><img src="pic/还挺牛.png"></div> 
+   <div id="w4"><img src="pic/还挺牛.png"></div> 
+   <div id="w5"><img src="pic/还挺牛.png"></div> 
 </body>
 </html>
