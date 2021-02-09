@@ -1,0 +1,31 @@
+*{margin: 0px;padding: 0px;}
+
+
+/*顶部导航条*/
+ul
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: grey;
+}
+li
+{
+    float: left;
+}
+
+li a
+{
+    display: block;
+    width: 60px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover
+{
+    background-color: #111;
+}
