@@ -29,3 +29,10 @@ li a:hover
 {
     background-color: #111;
 }
+
+img
+{
+    max-width: 100%;
+    max-height: auto;
+    
+}
