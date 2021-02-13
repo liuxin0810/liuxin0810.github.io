@@ -1,3 +1,8 @@
 *{margin: 0px;padding: 0px;}
 
+.bigpage img{
+background-size:contain|cover;
+width:100%;
+height: auto;
 
+}
