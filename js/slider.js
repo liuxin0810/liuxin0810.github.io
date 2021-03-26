@@ -46,23 +46,23 @@ const WholePageSlider = class {
 
     const sectionButtonContainer = this.createElement('div', { className: 'sectionButtonContainer' }, this.container)
 
-    // Create elements for every section and apply styles
+    // 为每个部分创建元素并应用样式
     for (let index = 0; index < this.sections.length; index++) {
 
-      // Count and add page Starting position for every section
+      // 计算并添加每个节的起始页位置
       this.translate.page[index] = 0
       this.currentPage[index] = 0
       this.pagesPerSection[index] = this.sections[index].getElementsByClassName(this.pageClass)
       
-      // Apply background color for section
+      // 为每个节添加背景颜色
       if (this.options.colors) {
         this.sections[index].style.background = this.options.colors[index] ? this.options.colors[index] : 'white'
       }
       
-      // We need to be sure that there is more then 1 section before creating navigation
+      // 确保在创建导航之前有超过1个页面
       if (this.sections.length > 1) {
 
-        // Create radio button for every section
+        // 为每个部分创建单选按钮
         const sectionNavigationButton = this.createElement('input', {
           type: 'radio',
           name: 'sectionScrollButton',
@@ -83,19 +83,19 @@ const WholePageSlider = class {
           }
         }, sectionButtonContainer)
 
-        // Give some custom style for radio buttons with labels
+        // 为按钮添加自定义样式
         this.createElement('label', { htmlFor: sectionNavigationButton.id }, sectionButtonContainer)
         
       }
 
-      // Create navigation for pages only if there is more than 1 page per section
+      // 仅当有多个页面时才为页面创建导航
       if (this.pagesPerSection[index].length > 1) {
         
         const pageButtonContainer = this.createElement('div', { id: `pageButtonContainer[${index}]`, className: 'page_selection' }, this.sections[index])
 
         for (let i = 0; i < this.pagesPerSection[index].length; i++) {
 
-          // Create radio button for every page
+          // 为每个界面创建单选按钮
           this.createElement('input', {
             type: 'radio',
             id: `page[${index}][${i}]`,
@@ -116,27 +116,27 @@ const WholePageSlider = class {
             }
           }, pageButtonContainer)
 
-          // Give some custom style for radio buttons with labels
+          // 为按钮添加自定义样式
           this.createElement('label', { htmlFor: `page[${index}][${i}]` }, pageButtonContainer)
 
         }
-        // Align container to center, because we never know how wide container will be after all buttons added 
+        // 中心对齐添加按钮后的界面
         pageButtonContainer.style.left = `calc(50% - ${pageButtonContainer.getBoundingClientRect().width / 2}px)`
       }
     }
-    // Same thing as pageButtonContainer, but only with height 
+    // 同上 中心对齐
     sectionButtonContainer.style.top = `calc(50% - ${sectionButtonContainer.getBoundingClientRect().height / 2}px)`
   }
 
   switchAndTranslateSection (swipeOrClick) {
-    // If we have no sections created or have to wait for animation to complete - return
+    // 如果我们没有创建节或必须等待动画完成后返回
     if (!this.sections || this.sections.length < 1 || this.waitAnimation) {
       return
     } else {
       this.waitAnimation = true
     }
 
-    // Handle swipe or click for sections (UP/DOWN)
+    // （上下）滑动或点击控制
     if (((swipeOrClick.deltaY > 0 || swipeOrClick === 'down') && this.swipeStartDirection !== 'up') && (this.currentSection < this.sections.length - 1)) {
       this.currentSection++
       this.translate.section -= this.height
@@ -150,26 +150,26 @@ const WholePageSlider = class {
       this.currentSection = parseInt(swipeOrClick.target.value)
       this.translate.section = this.translate.section - (this.height * click)
     } else {
-      // Now, if there was any dragging, but canceled – animate back to origin.
+      // 现在，如果有任何拖动，取消动画回到原点.
       this.translate.section = Math.round(this.translate.section / 100) * 100
     }
 
-    // This is needed to show active page on navigation buttons
+    // 在导航按钮上显示活动页
     const button = document.getElementById(`sectionId[${this.currentSection}]`)
     if (button) {
       button.checked = true
     }
    
-    // Reset settings after swipe, drag or click ended
+    // 重置设置
     this.isDragging = false
     this.height = 100
     
-    // Animate/translate sections
+    // 动画部分
     for (let index = 0; index < this.sections.length; index++) {
       this.sections[index].style.transform = `translateY(${this.translate.section}%)`
     }
 
-    // Complete previous animation before calling next
+    // 调用下一个动画前完成上一个动画
     setTimeout(() => {
       this.waitAnimation = false
     }, this.timeToAnimate)
@@ -181,7 +181,7 @@ const WholePageSlider = class {
       return
     } 
 
-    // Handle swipe or click for pages (LEFT/RIGHT)
+    // （左右）滑动界面或点击
     if (swipeOrClick === 'right' && this.swipeStartDirection !== 'left' && (this.currentPage[this.currentSection] < this.pagesPerSection[this.currentSection].length - 1)) {
       this.currentPage[this.currentSection]++
       this.translate.page[this.currentSection] -= this.width
@@ -195,26 +195,26 @@ const WholePageSlider = class {
       this.currentPage[this.currentSection] = parseInt(swipeOrClick.target.value)
       this.translate.page[this.currentSection] = this.translate.page[this.currentSection] - (this.width * getDirectionFromClick)
     } else {
-      // Now, if there was any dragging, but canceled – animate back to origin.
+      // 现在，如果有任何拖动，取消-动画回到原点
       this.translate.page[this.currentSection] = Math.round(this.translate.page[this.currentSection] / 100) * 100
     }
 
-    // Reset settings after swipe, drag or click ended
+    // 重置设置
     this.isDragging = false
     this.width = 100
     
-    // This is needed to show active page on navigation buttons
+    // 在导航按钮上显示活动页
     const button = document.getElementById(`page[${this.currentSection}][${this.currentPage[this.currentSection]}]`)
     if (button) {
       button.checked = true
     }
     
-    // Animate/translate pages
+    // 动画
     for (let index = 0; index < this.pagesPerSection[this.currentSection].length; index++) {
       this.pagesPerSection[this.currentSection][index].style.transform = `translateX(${this.translate.page[this.currentSection]}%)`
     }
 
-    // Complete previous animation before calling next
+    // 调用下一个动画前完成上一个
     setTimeout(() => {
       this.waitAnimation = false
     }, this.timeToAnimate)
@@ -226,16 +226,16 @@ const WholePageSlider = class {
       return
     }
 
-    // Save start swiping direction to compare when touch/click ended
+    // 保存开始滑动方向，以便在触摸/单击结束时进行比较
     this.swipeStartDirection = this.swipeEndDirection
-
-    // Check if dragging horizontal and we are not waiting for any previous animation to complete
+    //（左右）
+    // 检查是否水平拖动，并且没有等待任何以前的动画完成
     if ((this.swipeStartDirection === 'left' || this.swipeStartDirection === 'right') && !this.waitAnimation) {
 
-      // Get all pages for current section
+      // 获取当前节的所有页面
       const pages = this.pagesPerSection[this.currentSection]
 
-      // Handle dragging effect
+      // 拖动效果
       if (this.swipeStartDirection === 'right') {
         this.width -= this.draggingPercent
         this.translate.page[this.currentSection] -= this.draggingPercent
@@ -245,16 +245,16 @@ const WholePageSlider = class {
         this.translate.page[this.currentSection] += this.draggingPercent
       }
 
-      // Animate horizontal drag effect
+      // 设置水平拖动效果的动画
       for (let index = 0; index < pages.length; index++) {
         pages[index].style.transform = `translateX(${this.translate.page[this.currentSection]}%)`
       }
     }
-
-    // Check if dragging veritcal and we are not waiting for any previous animation to complete
+    //（上下）
+    // 检查是否水平拖动，并且没有等待任何以前的动画完成
     if ((this.swipeStartDirection === 'up' || this.swipeStartDirection === 'down') && !this.waitAnimation) {
      
-      // Handle dragging effect
+      // 拖动效果
       if (this.swipeStartDirection === 'down') {
         this.height -= this.draggingPercent
         this.translate.section -= this.draggingPercent
@@ -264,17 +264,17 @@ const WholePageSlider = class {
         this.translate.section += this.draggingPercent
       }
 
-      // Animate vertical drag effect
+      // 设置垂直拖动的动画
       for (let index = 0; index < this.sections.length; index++) {
         this.sections[index].style.transform = `translateY(${this.translate.section}%)`
       }
     }
 
-    // Function completed - we are not dragging anymore
+    // 拖动完成便不再拖动
     this.isDragging = false
   }
 
-  // Check if it is Mobile or Desktop device
+  // 检查是电脑设备还是手机设备
   getTouchOrClick (event) {
     const touch = event.touches ? event.touches[0] : event
     return touch
@@ -297,7 +297,7 @@ const WholePageSlider = class {
     this.touches.differenceX = this.touches.startX - this.touches.endX
     this.touches.differenceY = this.touches.startY - this.touches.endY
 
-    // We need to know vertical or horizontal swipe accured and then left/right or up/down
+    //是否是竖直或水平滑动，然后左右或上下
     if (Math.abs(this.touches.differenceX) > Math.abs(this.touches.differenceY)) {
       this.swipeEndDirection = this.touches.differenceX > 0 ? 'right' : 'left'
     } else {
@@ -338,7 +338,7 @@ const WholePageSlider = class {
       this.swipeEndDirection = 'down'
     }
 
-    // Check if any of allowed keys pressed only then execute function
+    // 检查是否只按下任何允许的按键，后执行功能
     if (this.swipeEndDirection && !this.waitAnimation) {
       this.switchAndTranslatePage(this.swipeEndDirection)
       this.switchAndTranslateSection(this.swipeEndDirection)
